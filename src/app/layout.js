@@ -1,7 +1,9 @@
-import { Inter } from "next/font/google";
+import { Maven_Pro } from "next/font/google";
 import "./globals.css";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Maven_Pro({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -10,8 +12,16 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html data-theme="forest" lang="en">
+      <body className={inter.className}>
+        <div className="min-h-screen garden:grainy">
+          <Nav />
+          {/* <div className="flex flex-col items-center justify-between p-24"> */}
+            {children}
+          {/* </div> */}
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }
