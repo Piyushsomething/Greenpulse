@@ -12,7 +12,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html data-theme="forest" lang="en">
+    <html data-theme="lemonade" lang="en">
       <body className={inter.className}>
         <div className="min-h-screen garden:grainy">
           <Nav />

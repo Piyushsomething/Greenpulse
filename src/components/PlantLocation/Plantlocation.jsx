@@ -27,10 +27,10 @@ const Plantlocation = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto h-96">
-        <table className="table table-pin-rows">
-          <thead>
-            <tr>
+      <div className="overflow-x-auto h-[50vh] animate-bounce">
+        <table className="table table-pin-rows table-zebra">
+          <thead className="">
+            <tr className="underline bg-green-200">
               <th>Location</th>
               <th>Latitude</th>
               <th>Longitude</th>
@@ -39,9 +39,9 @@ const Plantlocation = () => {
           <tbody>
             {locations.map((location, index) => (
               <tr key={index}>
-                <td>{location.name}</td>
-                <td>{location.latitude}</td>
-                <td>{location.longitude}</td>
+                <td className="">{location.name}</td>
+                <td className="">{location.latitude}</td>
+                <td className="">{location.longitude}</td>
               </tr>
             ))}
           </tbody>

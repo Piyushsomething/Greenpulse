@@ -13,18 +13,18 @@ const NotificationCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentNotificationIndex((prevIndex) => (prevIndex + 1) % notifications.length);
-    }, 1000); // Change notification every 3 seconds
+    }, 500); // Change notification every 3 seconds
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className=" p-4 rounded-md shadow-md">
-      <div className="flex items-center justify-between">
-        {/* <h3 className="text-lg font-semibold">Notifications</h3> */}
+    <div className="  ">
+      <div className="flex flex-col items-center justify-between">
+        <h3 className="text-lg font-semibold">Notifications</h3>
       </div>
       <div className="">
-        <div className="transition-opacity duration-500 opacity-100">
+        <div className="transition-opacity duration-500 opacity-100 flex flex-col items-center justify-between">
           {notifications[currentNotificationIndex]}
         </div>
       </div>
