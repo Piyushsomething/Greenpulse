@@ -27,7 +27,7 @@ const Plantlocation = () => {
 
   return (
     <div>
-      <div className="overflow-x-auto h-[50vh] animate-bounce">
+      <div className="overflow-x-auto h-[50vh] ">
         <table className="table table-pin-rows table-zebra">
           <thead className="">
             <tr className="underline bg-green-200">

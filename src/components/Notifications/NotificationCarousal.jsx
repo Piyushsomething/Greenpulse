@@ -1,35 +1,42 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
-const notifications = [
-  "Notification 1: Lorem ipsum dolor sit amet.",
-  "Notification 2: Consectetur adipiscing elit.",
-  "Notification 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-];
-
-const NotificationCarousel = () => {
-  const [currentNotificationIndex, setCurrentNotificationIndex] = useState(0);
+const MovingText = () => {
+  const [texts, setTexts] = useState([
+    "Text 1: Lorem ipsum dolor sit amet.",
+    "Text 2: Consectetur adipiscing elit.",
+    "Text 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+    "Text 4: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    "Text 5: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+    "Text 6: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  ]);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [textWidth, setTextWidth] = useState(0);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentNotificationIndex((prevIndex) => (prevIndex + 1) % notifications.length);
-    }, 500); // Change notification every 3 seconds
+      if (containerRef.current.scrollWidth <= containerRef.current.clientWidth) {
+        setCurrentTextIndex(prevIndex => (prevIndex + 1) % texts.length);
+      }
+    }, 2000); // Change text every 2 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, [texts]);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setTextWidth(containerRef.current.scrollWidth);
+    }
+  }, [texts, currentTextIndex]);
 
   return (
-    <div className="  ">
-      <div className="flex flex-col items-center justify-between">
-        <h3 className="text-lg font-semibold">Notifications</h3>
-      </div>
-      <div className="">
-        <div className="transition-opacity duration-500 opacity-100 flex flex-col items-center justify-between">
-          {notifications[currentNotificationIndex]}
-        </div>
+    <div className="flex items-center space-x-4 overflow-hidden">
+      <div ref={containerRef} className={`w-full text-justify overflow-hidden`} style={{ animation: `marquee ${textWidth / 50}s linear infinite` }}>
+        <p>{texts[currentTextIndex]}</p>
       </div>
     </div>
   );
 };
 
-export default NotificationCarousel;
+export default MovingText;

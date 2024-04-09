@@ -62,7 +62,6 @@ const SatelliteViewMap = () => {
       </form> */}
 
       <div
-      className="animate-ping"
         id="map"
         style={{ height: "calc(100vh - 250px)", width: "100%" }}
       ></div>

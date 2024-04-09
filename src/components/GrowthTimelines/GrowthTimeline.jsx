@@ -2,7 +2,7 @@ import React from "react";
 
 const GrowthTimeline = () => {
   return (
-    <div className="h-[50vh] overflow-y-auto shadow-sm animate-spin ">
+    <div className="h-[50vh] overflow-y-auto shadow-sm ">
       <ul className="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
         <li>
           <div className="timeline-middle">
