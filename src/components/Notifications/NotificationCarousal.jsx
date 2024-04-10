@@ -1,42 +1,77 @@
-"use client"
-import React, { useState, useEffect, useRef } from 'react';
+"use client";
+import React from "react";
+import IconComponents from "./IconComponents";
+import Image from "next/image";
 
-const MovingText = () => {
-  const [texts, setTexts] = useState([
-    "Text 1: Lorem ipsum dolor sit amet.",
-    "Text 2: Consectetur adipiscing elit.",
-    "Text 3: Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-    "Text 4: Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-    "Text 5: Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
-    "Text 6: Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  ]);
-  const [currentTextIndex, setCurrentTextIndex] = useState(0);
-  const [textWidth, setTextWidth] = useState(0);
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (containerRef.current.scrollWidth <= containerRef.current.clientWidth) {
-        setCurrentTextIndex(prevIndex => (prevIndex + 1) % texts.length);
-      }
-    }, 2000); // Change text every 2 seconds
-
-    return () => clearInterval(interval);
-  }, [texts]);
-
-  useEffect(() => {
-    if (containerRef.current) {
-      setTextWidth(containerRef.current.scrollWidth);
-    }
-  }, [texts, currentTextIndex]);
-
+const NotificationCarousal = () => {
   return (
-    <div className="flex items-center space-x-4 overflow-hidden">
-      <div ref={containerRef} className={`w-full text-justify overflow-hidden`} style={{ animation: `marquee ${textWidth / 50}s linear infinite` }}>
-        <p>{texts[currentTextIndex]}</p>
+    <div className="flex">
+      <div className="w-5/6 bg-[#FCDC2A] relative flex overflow-x-hidden border-4 rounded-3xl">
+        <div className=" animate-marquee2 whitespace-nowrap">
+          <span className="mr-16">
+            NOtification Item 1 <a>ReadMore:</a>
+          </span>
+          <span className="mx-16">
+            NOtification Item 2 <a>ReadMore:</a>
+          </span>
+          <span className="mx-16">
+            NOtification Item 3 <a>ReadMore:</a>
+          </span>
+          <span className="mx-16">
+            NOtification Item 4 <a>ReadMore:</a>
+          </span>
+          <span className="mx-16">
+            NOtification Item 5 <a>ReadMore:</a>
+          </span>
+        </div>
+      </div>
+      <div className="w-1/6 flex justify-center space-x-4 mr-4">
+        <button
+          className="btn animate-bounce"
+          onClick={() => document.getElementById("my_modal_2").showModal()}
+        >
+          Share
+          <Image
+            className="h-8 w-8"
+            src="/share.gif"
+            width={100}
+            height={100}
+            alt="image tag"
+          />
+        </button>
+        <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
+          Feedback
+          <Image
+            className="h-8 w-8"
+            src="/feedback.gif"
+            width={100}
+            height={100}
+            alt="image tag"
+          />
+        </button>
+
+        <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
+          Query
+          <Image
+            className="h-8 w-8"
+            src="/faq.png"
+            width={100}
+            height={100}
+            alt="image tag"
+          />
+        </button>
+        <dialog id="my_modal_2" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Please Share this on!</h3>
+            <IconComponents />
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>Close</button>
+          </form>
+        </dialog>
       </div>
     </div>
   );
 };
 
-export default MovingText;
+export default NotificationCarousal;

@@ -2,6 +2,7 @@ import { Maven_Pro } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import Provider from "./Provider";
 
 const inter = Maven_Pro({ subsets: ["latin"] });
 
@@ -14,12 +15,14 @@ export default function RootLayout({ children }) {
   return (
     <html data-theme="lemonade" lang="en">
       <body className={inter.className}>
-        <div className="min-h-screen garden:grainy">
-          <Nav />
-          {/* <div className="flex flex-col items-center justify-between p-24"> */}
+        <div className="min-h-screen ">
+          <Provider>
+            <Nav />
+            {/* <div className="flex flex-col items-center justify-between p-24"> */}
             {children}
-          {/* </div> */}
-          <Footer />
+            {/* </div> */}
+            <Footer />
+          </Provider>
         </div>
       </body>
     </html>
