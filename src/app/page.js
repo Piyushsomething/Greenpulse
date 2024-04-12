@@ -4,10 +4,14 @@ import SatelliteViewMap from "@/components/MapDiv/MapFrame";
 import Plantlocation from "@/components/PlantLocation/Plantlocation";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import HealthReports from "@/components/HealthReports/HealthReports";
+import Nav from "@/components/Nav";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <div>
+      <Nav />
+
       <div className="flex h-[84vh] ">
         {/* Left Side Menu */}
         <div className="w-1/5 flex flex-col border-4 border-base-100">
@@ -61,6 +65,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

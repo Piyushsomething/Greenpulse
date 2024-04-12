@@ -17,11 +17,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="min-h-screen ">
           <Provider>
-            <Nav />
             {/* <div className="flex flex-col items-center justify-between p-24"> */}
             {children}
             {/* </div> */}
-            <Footer />
           </Provider>
         </div>
       </body>
