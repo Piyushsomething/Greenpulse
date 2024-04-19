@@ -1,13 +1,23 @@
 import React from "react";
 import GrowthTimeline from "@/components/GrowthTimelines/GrowthTimeline";
-import SatelliteViewMap from "@/components/MapDiv/MapFrame";
 import Plantlocation from "@/components/PlantLocation/Plantlocation";
 import ProfileCard from "@/components/Profile/ProfileCard";
 import HealthReports from "@/components/HealthReports/HealthReports";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import CesiumWrapper from "@/components/Cesium/CesiumWrapper";
 
-export default function Home() {
+export default async function  Home() {
+  async function getPosition() {
+    //Mimic server-side stuff...
+    return {
+      position: {
+        lat: 28.565164,
+        lng: 77.249209
+      }
+    }
+  }
+  const fetchedPosition = await getPosition();
   return (
     <div>
       <Nav />
@@ -37,7 +47,8 @@ export default function Home() {
         <div className="flex-1 ">
           {/* Main Content */}
           <div className="h-full ">
-            <SatelliteViewMap />
+            {/* <SatelliteViewMap /> */}
+            <CesiumWrapper positions={[fetchedPosition.position]} />
           </div>
         </div>
 

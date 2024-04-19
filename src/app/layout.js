@@ -16,11 +16,11 @@ export default function RootLayout({ children }) {
     <html data-theme="lemonade" lang="en">
       <body className={inter.className}>
         <div className="min-h-screen ">
-          <Provider>
+          {/* <Provider> */}
             {/* <div className="flex flex-col items-center justify-between p-24"> */}
             {children}
             {/* </div> */}
-          </Provider>
+          {/* </Provider> */}
         </div>
       </body>
     </html>
