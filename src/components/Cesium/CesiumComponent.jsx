@@ -1,25 +1,21 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { dateToJulianDate } from './date';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
-export const CesiumComponent = ({
-    CesiumJs,
-    positions
-}) => {
-    const cesiumViewer = React.useRef(null);
-    const cesiumContainerRef = React.useRef(null);
-    const [isLoaded, setIsLoaded] = React.useState(false);
+export const CesiumComponent = ({ CesiumJs, positions }) => {
+    const cesiumViewer = useRef(null);
+    const cesiumContainerRef = useRef(null);
+    const [isLoaded, setIsLoaded] = useState(false);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (cesiumViewer.current === null && cesiumContainerRef.current) {
             cesiumViewer.current = new CesiumJs.Viewer(cesiumContainerRef.current);
             cesiumViewer.current.clock.clockStep = CesiumJs.ClockStep.SYSTEM_CLOCK_MULTIPLIER;
         }
     }, []);
 
-    React.useEffect(() => {
-        if (isLoaded) return;
-        if (cesiumViewer.current !== null) {
+    useEffect(() => {
+        if (isLoaded && cesiumViewer.current !== null) {
             // Use the positions prop to create the polygon coordinates
             const polygonCoordinates = positions;
 
@@ -33,20 +29,26 @@ export const CesiumComponent = ({
                 }
             });
 
-            setIsLoaded(true);
+            // Zoom to the polygon
+            const boundingSphere = CesiumJs.BoundingSphere.fromPoints(polygonCoordinates);
+            cesiumViewer.current.camera.viewBoundingSphere(boundingSphere, new CesiumJs.HeadingPitchRange(0, -0.5, boundingSphere.radius));
         }
     }, [positions, isLoaded]);
 
-    const entities = [];
-    const julianDate = dateToJulianDate(CesiumJs, new Date());
+    useEffect(() => {
+        // Set the loaded state when the viewer is initialized
+        if (cesiumViewer.current !== null) {
+            setIsLoaded(true);
+        }
+    }, [CesiumJs]);
 
     return (
         <div
             ref={cesiumContainerRef}
             id='cesium-container'
-            style={{height: '70vh', width: '80vw'}}
+            style={{ height: '70vh', width: '60vw' }}
         />
     );
-}
+};
 
 export default CesiumComponent;

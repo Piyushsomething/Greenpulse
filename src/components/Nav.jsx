@@ -16,9 +16,9 @@ const Nav = () => {
           />
         </div>
         <div className="navbar-center">
-          <a className="animate-pulse  btn btn-ghost text-5xl underline text-[#87A922] ">
+          <div className="  btn btn-ghost text-8xl mb-12 font-extrabold underline text-[#87A922] ">
             GreenPulse : Nurturing Your Legacy
-          </a>
+          </div>
         </div>
         <div className="navbar-end px-12">
           <Image

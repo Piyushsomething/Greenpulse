@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+// Home.js
+import React, { useState, useEffect } from "react";
 import GrowthTimeline from "@/components/GrowthTimelines/GrowthTimeline";
 import Plantlocation from "@/components/PlantLocation/Plantlocation";
 import ProfileCard from "@/components/Profile/ProfileCard";
@@ -7,34 +9,47 @@ import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import CesiumWrapper from "@/components/Cesium/CesiumWrapper";
 
-export default async function  Home() {
-  async function getPosition() {
-    //Mimic server-side stuff...
-    return {
-      position: {
-        lat: 28.565164,
-        lng: 77.249209
-      }
-    }
-  }
-  const fetchedPosition = await getPosition();
+export default function Home() {
+  const [selectedCoordinates, setSelectedCoordinates] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [timeoutReached, setTimeoutReached] = useState(false);
+
+  const handleLocationSelect = (coordinates) => {
+    setSelectedCoordinates(coordinates);
+    setLoading(true); // Set loading to true when coordinates are selected
+    setTimeoutReached(false); // Reset timeout reached state
+  };
+
+  useEffect(() => {
+    // Start a timeout of 5 seconds
+    const timeout = setTimeout(() => {
+      setLoading(false); // Set loading to false
+      setTimeoutReached(true); // Set timeout reached state
+    }, 2000); // Adjust timeout duration as needed
+
+    return () => clearTimeout(timeout); // Cleanup function to clear timeout on unmount or dependency change
+  }, [selectedCoordinates]);
+
+  const handleCesiumLoad = () => {
+    setLoading(false); // Set loading to false when Cesium component is loaded
+  };
+
   return (
     <div>
       <Nav />
 
       <div className="flex h-[84vh] ">
         {/* Left Side Menu */}
-        <div className="w-1/5 flex flex-col border-4 border-base-100">
+        <div className="w-1/5 flex flex-col justify-around border-4 border-base-100">
           {/* First Box */}
-          <div className="h-3/5 mb-4 border-4 border-green-200 rounded-2xl">
+          <div className=" mb-4 border-4 border-green-200 rounded-2xl">
             <h1 className="text-4xl font-bold text-center m-2 text-green-900">
               Plant Locations
+              <Plantlocation onLocationSelect={handleLocationSelect} />
             </h1>
-            <Plantlocation />
           </div>
           {/* Second Box */}
-          <div className="h-auto mr-8">
-            {/* <div className="skeleton min-h-32 h-auto w-full"></div> */}
+          <div className=" mr-8">
             <h1 className="text-4xl font-bold text-center  text-green-900">
               Profile{" "}
             </h1>
@@ -47,8 +62,18 @@ export default async function  Home() {
         <div className="flex-1 ">
           {/* Main Content */}
           <div className="h-full ">
-            {/* <SatelliteViewMap /> */}
-            <CesiumWrapper positions={[fetchedPosition.position]} />
+            {loading ? (
+              <div className="flex items-center justify-center h-full">
+                <span className="loading loading-spinner loading-xs"></span>
+              </div>
+            ) : (
+              selectedCoordinates && (
+                <CesiumWrapper
+                  positions={selectedCoordinates}
+                  onCesiumLoad={handleCesiumLoad}
+                />
+              )
+            )}
           </div>
         </div>
 

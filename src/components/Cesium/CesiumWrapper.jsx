@@ -12,7 +12,6 @@ export const CesiumWrapper = ({
     positions
 }) => {
     const [CesiumJs, setCesiumJs] = React.useState(null);
-    
     React.useEffect(() => {
         if (CesiumJs !== null) return
         const CesiumImportPromise = import('cesium');
