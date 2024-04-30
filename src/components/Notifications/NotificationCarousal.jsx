@@ -2,6 +2,7 @@
 import React from "react";
 import IconComponents from "./IconComponents";
 import Image from "next/image";
+import ScreenPdfComponent from "./WebpageToPdf/ScreenPdfComponent";
 
 const NotificationCarousal = () => {
   return (
@@ -28,10 +29,11 @@ const NotificationCarousal = () => {
       <div className="w-1/6 flex justify-center space-x-4 mr-4">
         <button
           className="btn animate-bounce"
-          onClick={() => document.getElementById("my_modal_2").showModal()}
+          onClick={() => document.getElementById("my_modal_1").showModal()}
         >
           Share
           <Image
+          unoptimized
             className="h-8 w-8"
             src="/share.gif"
             width={100}
@@ -42,6 +44,7 @@ const NotificationCarousal = () => {
         <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
           Feedback
           <Image
+          unoptimized
             className="h-8 w-8"
             src="/feedback.gif"
             width={100}
@@ -53,6 +56,7 @@ const NotificationCarousal = () => {
         <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
           Query
           <Image
+          unoptimized
             className="h-8 w-8"
             src="/faq.png"
             width={100}
@@ -60,6 +64,15 @@ const NotificationCarousal = () => {
             alt="image tag"
           />
         </button>
+        <dialog id="my_modal_1" className="modal">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Please Share this on!</h3>
+            <ScreenPdfComponent/>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>Close</button>
+          </form>
+        </dialog>
         <dialog id="my_modal_2" className="modal">
           <div className="modal-box">
             <h3 className="font-bold text-lg">Please Share this on!</h3>

@@ -8,6 +8,7 @@ export const CesiumComponent = ({ CesiumJs, positions }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
+
         if (cesiumViewer.current === null && cesiumContainerRef.current) {
             cesiumViewer.current = new CesiumJs.Viewer(cesiumContainerRef.current);
             cesiumViewer.current.clock.clockStep = CesiumJs.ClockStep.SYSTEM_CLOCK_MULTIPLIER;

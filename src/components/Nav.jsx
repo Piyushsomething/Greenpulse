@@ -8,6 +8,7 @@ const Nav = () => {
       <div className="navbar bg-green-900 rounded-3xl border-4">
         <div className="navbar-start">
           <Image
+          unoptimized
             alt="rightImage"
             className="rounded-3xl"
             width="100"
@@ -22,6 +23,7 @@ const Nav = () => {
         </div>
         <div className="navbar-end px-12">
           <Image
+          unoptimized
             alt="rightImage"
             className="rounded-3xl"
             width="100"

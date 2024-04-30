@@ -12,52 +12,52 @@ import CesiumWrapper from "@/components/Cesium/CesiumWrapper";
 export default function Home() {
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [growthCount, setGrowthCount] = useState(1);
   const [timeoutReached, setTimeoutReached] = useState(false);
 
-  const handleLocationSelect = (coordinates) => {
+  const handleLocationSelect = (coordinates, growthCount) => {
     setSelectedCoordinates(coordinates);
-    setLoading(true); // Set loading to true when coordinates are selected
-    setTimeoutReached(false); // Reset timeout reached state
+    setGrowthCount(growthCount); // Set growthCount based on the selected location
+    setLoading(true);
+    setTimeoutReached(false);
   };
 
   useEffect(() => {
-    // Start a timeout of 5 seconds
     const timeout = setTimeout(() => {
-      setLoading(false); // Set loading to false
-      setTimeoutReached(true); // Set timeout reached state
-    }, 2000); // Adjust timeout duration as needed
+      setLoading(false);
+      setTimeoutReached(true);
+    }, 2000);
 
-    return () => clearTimeout(timeout); // Cleanup function to clear timeout on unmount or dependency change
+    return () => clearTimeout(timeout);
   }, [selectedCoordinates]);
 
   const handleCesiumLoad = () => {
-    setLoading(false); // Set loading to false when Cesium component is loaded
+    setLoading(false);
   };
 
   return (
     <div>
       <Nav />
-
       <div className="flex h-[84vh] ">
         {/* Left Side Menu */}
         <div className="w-1/5 flex flex-col justify-around border-4 border-base-100">
           {/* First Box */}
-          <div className=" mb-4 border-4 border-green-200 rounded-2xl">
+          <div className="  mb-4 h-2/5 border-4 border-green-200 rounded-2xl">
             <h1 className="text-4xl font-bold text-center m-2 text-green-900">
               Plant Locations
               <Plantlocation onLocationSelect={handleLocationSelect} />
             </h1>
           </div>
           {/* Second Box */}
+          <div className=" divider lg:divider-vertical"></div>
+
           <div className=" mr-8">
             <h1 className="text-4xl font-bold text-center  text-green-900">
               Profile{" "}
             </h1>
-
             <ProfileCard />
           </div>
         </div>
-
         {/* Middle Content */}
         <div className="flex-1 ">
           {/* Main Content */}
@@ -76,7 +76,6 @@ export default function Home() {
             )}
           </div>
         </div>
-
         {/* Right Side Menu */}
         <div className="w-1/5 flex flex-col">
           {/* First Box */}
@@ -87,16 +86,14 @@ export default function Home() {
             <h1 className="text-md font-bold text-center  text-green-900">
               (Drone captured)
             </h1>
-
-            <GrowthTimeline />
+            <GrowthTimeline growthCount={growthCount} /> {/* Pass growthCount as prop */}
           </div>
-          <div className="divider lg:divider-vertical">OR</div>
+          <div className="divider lg:divider-vertical"></div>
           {/* Second Box */}
           <div className="h-1/3 px-12">
             <h1 className="text-4xl font-bold text-center m-2 text-green-900">
               Health Reports
             </h1>
-
             <HealthReports />
           </div>
         </div>

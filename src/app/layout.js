@@ -1,8 +1,5 @@
 import { Maven_Pro } from "next/font/google";
 import "./globals.css";
-import Nav from "@/components/Nav";
-import Footer from "@/components/Footer";
-import Provider from "./Provider";
 
 const inter = Maven_Pro({ subsets: ["latin"] });
 

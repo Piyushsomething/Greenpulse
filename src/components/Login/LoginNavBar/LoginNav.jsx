@@ -15,8 +15,8 @@ const LoginNav = () => {
           />
           <span className="text-white text-lg font-semibold ml-4">GreenPulse</span>
         </div>
-        <div className="hidden md:flex items-center justify-center">
-          <span className=" text-lg md:font-extrabold md:text-5xl  text-[#87A922]">
+        <div className="hidden md:flex md:ml-[1400px] items-center justify-center">
+          <span className=" text-xl md:font-extrabold md:text-5xl  text-[#87A922]">
           GreenPulse : Nurturing Your Legacy
           </span>
         </div>
