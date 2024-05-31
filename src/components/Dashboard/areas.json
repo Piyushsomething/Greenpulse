@@ -1,0 +1,65 @@
+ [
+    {
+      "name": "Karachi",
+      "longitude": "24.8607 24.9226 24.9442 24.9635",
+      "latitude": "67.0011 67.0825 66.9684 66.9478",
+      "variety": "apple",
+      "growthDone": 3
+    },
+    {
+      "name": "Delhi",
+      "longitude": "28.48 28.34 28.26 28.47",
+      "latitude": "77.00 76.53 77.14 77.13",
+      "variety": "apple",
+      "growthDone": 4
+
+    },
+    {
+      "name": "Taiwan Square (1 sq km)",
+      "longitude": "25.1230 24.5223 24.5223 25.1230",
+      "latitude": "121.4571 121.4571 120.8564 120.8564",
+      "variety": "apple",
+      "growthDone": 2
+
+    },
+    {
+      "name": "Kargil Rectangle Area (1 sq km)",
+      "longitude": "34.5591 34.5591 34.5582 34.5582",
+      "latitude": "76.1029 76.1198 76.1198 76.1029",
+      "variety": "apple",
+      "growthDone": 1
+
+    },
+    {
+      "name": "Karachi",
+      "longitude": "24.8607 24.9226 24.9442 24.9635",
+      "latitude": "67.0011 67.0825 66.9684 66.9478",
+      "variety": "apple",
+      "growthDone": 3
+    },
+    {
+      "name": "Delhi",
+      "longitude": "28.48 28.34 28.26 28.47",
+      "latitude": "77.00 76.53 77.14 77.13",
+      "variety": "apple",
+      "growthDone": 4
+
+    },
+    {
+      "name": "Taiwan Square (1 sq km)",
+      "longitude": "25.1230 24.5223 24.5223 25.1230",
+      "latitude": "121.4571 121.4571 120.8564 120.8564",
+      "variety": "apple",
+      "growthDone": 2
+
+    },
+    {
+      "name": "Kargil Rectangle Area (1 sq km)",
+      "longitude": "34.5591 34.5591 34.5582 34.5582",
+      "latitude": "76.1029 76.1198 76.1198 76.1029",
+      "variety": "apple",
+      "growthDone": 1
+
+    }
+    
+  ]

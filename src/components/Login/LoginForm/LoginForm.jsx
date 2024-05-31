@@ -1,9 +1,8 @@
 // LoginForm.jsx
 import Link from "next/link";
 import React from "react";
-
 const LoginForm = () => {
- 
+
   return (
     <div className="w-full max-w-md mx-auto  p-8 rounded-lg bg-green-600 md:bg-transparent">
       <label className="input input-bordered flex items-center gap-2 mb-4">
@@ -42,7 +41,7 @@ const LoginForm = () => {
         />
       </label>
       <div className="flex justify-center md:justify-start">
-        <Link href={"/"}>
+        <Link href={"/Dashboard"}>
         <button  className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
           LOGIN
         </button>

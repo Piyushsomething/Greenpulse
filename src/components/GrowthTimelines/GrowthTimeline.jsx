@@ -50,7 +50,7 @@ const GrowthTimeline = ({ growthCount }) => {
   const slicedTimelineData = timelineData.slice(0, growthCount);
 
   return (
-    <div className="overflow-y-auto min-h-[600px] flex items-center w-full bg-green-500 max-h-[600px]">
+    <div className="overflow-y-auto min-h-[400px] flex items-center w-full bg-green-500 max-h-[600px]">
       <ul className=" w-full px-8  timeline-compact timeline timeline-vertical  rounded-3xl">
         {slicedTimelineData.map((item, index) => (
           <li key={index} className={index % 2 === 0 ? "even" : "odd"}>

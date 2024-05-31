@@ -8,9 +8,7 @@ const CesiumDynamicComponent = dynamic(() => import('./CesiumComponent'), {
     ssr: false
 });
 
-export const CesiumWrapper = ({
-    positions
-}) => {
+export const CesiumWrapper = ({ style, positions }) => {
     const [CesiumJs, setCesiumJs] = React.useState(null);
     React.useEffect(() => {
         if (CesiumJs !== null) return
@@ -22,7 +20,7 @@ export const CesiumWrapper = ({
     }, [CesiumJs]);
 
     return (
-        CesiumJs ? <CesiumDynamicComponent  CesiumJs={CesiumJs} positions={positions} /> : null
+        CesiumJs ? <CesiumDynamicComponent  CesiumJs={CesiumJs} positions={positions} style={style}/> : null
     )
 }
 

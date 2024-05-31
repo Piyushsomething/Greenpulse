@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { dateToJulianDate } from './date';
 import 'cesium/Build/Cesium/Widgets/widgets.css';
 
-export const CesiumComponent = ({ CesiumJs, positions }) => {
+export const CesiumComponent = ({ CesiumJs, positions, style }) => {
     const cesiumViewer = useRef(null);
     const cesiumContainerRef = useRef(null);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -31,6 +31,8 @@ export const CesiumComponent = ({ CesiumJs, positions }) => {
             });
 
             // Zoom to the polygon
+            console.log("Polygon Coordinates:", polygonCoordinates);
+
             const boundingSphere = CesiumJs.BoundingSphere.fromPoints(polygonCoordinates);
             cesiumViewer.current.camera.viewBoundingSphere(boundingSphere, new CesiumJs.HeadingPitchRange(0, -0.5, boundingSphere.radius));
         }
@@ -47,7 +49,8 @@ export const CesiumComponent = ({ CesiumJs, positions }) => {
         <div
             ref={cesiumContainerRef}
             id='cesium-container'
-            style={{ height: '70vh', width: '60vw' }}
+            // style={{ height: '70vh', width: '60vw' }}
+            style={style}
         />
     );
 };

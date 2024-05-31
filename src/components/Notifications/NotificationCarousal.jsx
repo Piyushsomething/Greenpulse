@@ -3,8 +3,11 @@ import React from "react";
 import IconComponents from "./IconComponents";
 import Image from "next/image";
 import ScreenPdfComponent from "./WebpageToPdf/ScreenPdfComponent";
+import { useRouter } from "next/navigation";
 
 const NotificationCarousal = () => {
+  const router = useRouter();
+
   return (
     <div className="flex">
       <div className="w-5/6 bg-[#FCDC2A] relative flex overflow-x-hidden border-4 rounded-3xl">
@@ -26,9 +29,9 @@ const NotificationCarousal = () => {
           </span>
         </div>
       </div>
-      <div className="w-1/6 flex justify-center space-x-4 mr-4">
+      <div className="w-1/6 flex justify-center space-x-2 mr-4">
         <button
-          className="btn animate-bounce"
+          className="btn "
           onClick={() => document.getElementById("my_modal_1").showModal()}
         >
           Share
@@ -53,8 +56,19 @@ const NotificationCarousal = () => {
           />
         </button>
 
-        <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
-          Query
+        <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/login")}>
+          Login
+          <Image
+          unoptimized
+            className="h-8 w-8"
+            src="/faq.png"
+            width={100}
+            height={100}
+            alt="image tag"
+          />
+        </button>
+        <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/admin")}>
+          Admin Login
           <Image
           unoptimized
             className="h-8 w-8"

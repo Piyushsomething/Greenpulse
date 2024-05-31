@@ -76,7 +76,7 @@ const Plantlocation = ({ onLocationSelect, growthDone }) => {
   };
   return (
     <div>
-      <div className="overflow-x-auto h-[30vh] ">
+      <div className="overflow-x-auto h-[45vh] ">
         <table className="table table-pin-rows table-zebra">
           <thead className="">
             <tr className="underline text-center bg-green-200 ">

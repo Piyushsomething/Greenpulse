@@ -20,13 +20,14 @@ export default function Home() {
     setGrowthCount(growthCount); // Set growthCount based on the selected location
     setLoading(true);
     setTimeoutReached(false);
+    console.log(coordinates);
   };
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       setLoading(false);
       setTimeoutReached(true);
-    }, 2000);
+    }, 100);
 
     return () => clearTimeout(timeout);
   }, [selectedCoordinates]);
@@ -40,9 +41,9 @@ export default function Home() {
       <Nav />
       <div className="flex h-[84vh] ">
         {/* Left Side Menu */}
-        <div className="w-1/5 flex flex-col justify-around border-4 border-base-100">
+        <div className="w-1/5 flex flex-col justify-start border-4 border-base-100">
           {/* First Box */}
-          <div className="  mb-4 h-2/5 border-4 border-green-200 rounded-2xl">
+          <div className="h-3/5">
             <h1 className="text-4xl font-bold text-center m-2 text-green-900">
               Plant Locations
               <Plantlocation onLocationSelect={handleLocationSelect} />
@@ -71,6 +72,7 @@ export default function Home() {
                 <CesiumWrapper
                   positions={selectedCoordinates}
                   onCesiumLoad={handleCesiumLoad}
+                  style={{ height: '70vh', width: '60vw' }}
                 />
               )
             )}
@@ -79,7 +81,7 @@ export default function Home() {
         {/* Right Side Menu */}
         <div className="w-1/5 flex flex-col">
           {/* First Box */}
-          <div className="h-2/3 ">
+          <div className="h-auto ">
             <h1 className="text-4xl font-bold text-center mt-2 text-green-900">
               Growth Timelines
             </h1>
