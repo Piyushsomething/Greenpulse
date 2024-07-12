@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+
 import IconComponents from "./IconComponents";
 import Image from "next/image";
 import ScreenPdfComponent from "./WebpageToPdf/ScreenPdfComponent";
@@ -7,6 +8,7 @@ import { useRouter } from "next/navigation";
 
 const NotificationCarousal = () => {
   const router = useRouter();
+ 
 
   return (
     <div className="flex">
@@ -32,7 +34,7 @@ const NotificationCarousal = () => {
       <div className="w-1/6 flex justify-center space-x-2 mr-4">
         <button
           className="btn "
-          onClick={() => document.getElementById("my_modal_1").showModal()}
+          onClick={() => document.getElementById("my_modal_2").showModal()}
         >
           Share
           <Image
@@ -44,7 +46,7 @@ const NotificationCarousal = () => {
             alt="image tag"
           />
         </button>
-        <button className="btn" onClick={() => document.getElementById("my_modal_2").showModal()}>
+        <button className="btn" onClick={() => document.getElementById("my_modal_1").showModal()}>
           Feedback
           <Image
           unoptimized
@@ -56,8 +58,8 @@ const NotificationCarousal = () => {
           />
         </button>
 
-        <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/login")}>
-          Login
+        <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/Dashboard")}>
+          Add New
           <Image
           unoptimized
             className="h-8 w-8"
@@ -67,7 +69,7 @@ const NotificationCarousal = () => {
             alt="image tag"
           />
         </button>
-        <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/admin")}>
+        {/* <button className="btn bg-green-900 text-yellow-300 " onClick={() => router.push("/admin")}>
           Admin Login
           <Image
           unoptimized
@@ -77,10 +79,10 @@ const NotificationCarousal = () => {
             height={100}
             alt="image tag"
           />
-        </button>
+        </button> */}
         <dialog id="my_modal_1" className="modal">
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Please Share this on!</h3>
+            <h3 className="font-bold text-lg">Please Share feedback this on!</h3>
             <ScreenPdfComponent/>
           </div>
           <form method="dialog" className="modal-backdrop">

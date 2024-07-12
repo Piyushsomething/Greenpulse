@@ -8,12 +8,29 @@ import HealthReports from "@/components/HealthReports/HealthReports";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import CesiumWrapper from "@/components/Cesium/CesiumWrapper";
+import { useRouter } from "next/navigation";
 
+import Cookies from "js-cookie";
 export default function Home() {
+  const router = useRouter();
+
   const [selectedCoordinates, setSelectedCoordinates] = useState(null);
   const [loading, setLoading] = useState(false);
   const [growthCount, setGrowthCount] = useState(1);
   const [timeoutReached, setTimeoutReached] = useState(false);
+
+  useEffect(() => {
+    try {
+      const token = Cookies.get("access_token_login");
+      if (!token) {
+        router.push("/login");
+      }
+    }
+    catch (error) {
+      console.error("Error fetching user requests:", error.message);
+    }
+},[])
+
 
   const handleLocationSelect = (coordinates, growthCount) => {
     setSelectedCoordinates(coordinates);

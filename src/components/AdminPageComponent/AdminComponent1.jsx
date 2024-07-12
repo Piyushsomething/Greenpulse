@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import areasData from "../Dashboard/areas.json";
 import { useRouter } from "next/navigation";
 import { Cartesian3 } from "cesium";
@@ -14,6 +14,19 @@ const AdminComponent1 = ({ onareaSelect }) => {
   const [selectedLatitude, setSelectedLatitude] = useState("");
   const [selectedLongitude, setSelectedLongitude] = useState("");
 
+  useEffect(() => {
+    const fetchAreas = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/area/");
+        const data = await response.json();
+        setAreas(data);
+      } catch (error) {
+        console.error("Error fetching areas:", error);
+      }
+    };
+    fetchAreas();
+  }, []);
+
   const handleAddArea = () => {
     if (
       selectedArea &&
@@ -24,10 +37,9 @@ const AdminComponent1 = ({ onareaSelect }) => {
       setAreas([
         ...areas,
         {
-          name: selectedArea,
-          variety: selectedPlant,
-          latitude: selectedLatitude,
-          longitude: selectedLongitude,
+          area: selectedArea,
+          lat: [selectedLatitude],
+          lon: [selectedLongitude],
         },
       ]);
       setLocalSelectedArea("");
@@ -43,13 +55,11 @@ const AdminComponent1 = ({ onareaSelect }) => {
   };
 
   const handleAreaSelect = (area) => {
-    const lat = area.longitude.split(" ");
-    const lon = area.latitude.split(" ");
     const vare = [
-      Cartesian3.fromDegrees(parseFloat(lon[0]), parseFloat(lat[0])),
-      Cartesian3.fromDegrees(parseFloat(lon[1]), parseFloat(lat[1])),
-      Cartesian3.fromDegrees(parseFloat(lon[2]), parseFloat(lat[2])),
-      Cartesian3.fromDegrees(parseFloat(lon[3]), parseFloat(lat[3])),
+      Cartesian3.fromDegrees(parseFloat(area.lon[0]), parseFloat(area.lat[0])),
+      Cartesian3.fromDegrees(parseFloat(area.lon[1]), parseFloat(area.lat[1])),
+      Cartesian3.fromDegrees(parseFloat(area.lon[2]), parseFloat(area.lat[2])),
+      Cartesian3.fromDegrees(parseFloat(area.lon[3]), parseFloat(area.lat[3])),
     ];
     console.log("Cartisian,fromDegree: ", vare);
     onareaSelect(vare);
@@ -127,10 +137,10 @@ const AdminComponent1 = ({ onareaSelect }) => {
         <tbody>
           {areas.map((area, index) => (
             <tr key={index} onClick={() => handleAreaSelect(area)}>
-              <td>{area.name}</td>
+              <td>{area.area}</td>
               <td>{area.variety}</td>
-              <td>{area.latitude}</td>
-              <td>{area.longitude}</td>
+              <td>{area.lat}</td>
+              <td>{area.lon}</td>
               <td>
                 <button
                   className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none"

@@ -5,7 +5,7 @@ import { Cartesian3 } from "cesium"; // Ensure you have Cesium imported
 const Plantlocation = ({ onLocationSelect, growthDone }) => {
   const locations = [
     {
-      name: "Karachi",
+      name: "Los Angeles",
       longitude: "24.8607 24.9226 24.9442 24.9635",
       latitude: "67.0011 67.0825 66.9684 66.9478",
       growthDone: 3
@@ -32,7 +32,7 @@ const Plantlocation = ({ onLocationSelect, growthDone }) => {
 
     },
     {
-      name: "Karachi",
+      name: "Los Angeles",
       longitude: "24.8607 24.9226 24.9442 24.9635",
       latitude: "67.0011 67.0825 66.9684 66.9478",
       growthDone: 3

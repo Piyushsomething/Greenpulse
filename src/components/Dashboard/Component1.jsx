@@ -1,77 +1,165 @@
 "use client";
 
-import React, { useState } from "react";
-import areasData from "./areas.json";
-import plantsData from "./plants.json";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { Cartesian3 } from "cesium";
 
 const Component1 = ({ setSelectedArea }) => {
   const router = useRouter();
-
-  const [selectedArea, setSelectedAreaLocal] = useState(""); // Define selectedArea state
-
-  const handleAreaChange = (e) => {
-    setSelectedAreaLocal(e.target.value); // Update selectedArea state
-    setSelectedArea(e.target.value); // Update selectedArea in parent component
-  };
-
+  const [areasData, setAreasData] = useState([]);
+  const [plantsData, setPlantsData] = useState([]);
+  const [loadingAreas, setLoadingAreas] = useState(true);
+  const [loadingPlants, setLoadingPlants] = useState(true);
+  const [selectedArea, setSelectedAreaLocal] = useState("");
   const [selectedPlant, setSelectedPlant] = useState("");
   const [numberOfPlants, setNumberOfPlants] = useState(0);
   const [previewData, setPreviewData] = useState("");
 
-  const handlePreview = () => {
-    const preview = `Username: Anuj\nSelected Area: ${selectedArea}\nSelected Plant: ${selectedPlant}\nNumber of Plants: ${numberOfPlants}`;
+  useEffect(() => {
+    const fetchAreasData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/area/`);
+        const data = await response.json();
+        setAreasData(data);
+      } catch (error) {
+        console.error('Error fetching areas data:', error);
+      } finally {
+        setLoadingAreas(false);
+      }
+    };
+
+    const fetchPlantsData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/plants/`);
+        const data = await response.json();
+        setPlantsData(data);
+      } catch (error) {
+        console.error('Error fetching plants data:', error);
+      } finally {
+        setLoadingPlants(false);
+      }
+    };
+
+    fetchAreasData();
+    fetchPlantsData();
+  }, []);
+
+  const handleAreaChange = (e) => {
+    const selectedAreaName = e.target.value;
+    setSelectedAreaLocal(selectedAreaName);
+    const area = areasData.find(area => area.area === selectedAreaName);
+
+    if (area) {
+      const coordinates = area.lat[0].split(" ").map((lat, index) => {
+        const lon = area.lon[0].split(" ")[index];
+        const parsedLat = parseFloat(lat);
+        const parsedLon = parseFloat(lon);
+        return Cartesian3.fromDegrees(parsedLon, parsedLat);
+      });
+      setSelectedArea(coordinates);
+      console.log("selectedf cordinates",coordinates);
+    }
+  };
+
+  const handlePreview = async () => {
+    const preview = `\nSelected Area: ${selectedArea}\nSelected Plant: ${selectedPlant}\nNumber of Plants: ${numberOfPlants}`;
     setPreviewData(preview);
     const alertMessage = `Preview Data:\n${preview}\n\nProceed to payment...`;
     if (window.confirm(alertMessage)) {
-      router.push('/payment');
+      try {
+        const token = Cookies.get('access_token_login');
+        console.log("Retrieved token:", token);
+        if (!token) {
+          throw new Error("Token not found in cookies.");
+        }
+
+        const selectedAreaObj = areasData.find(area => area.area === selectedArea);
+        const selectedPlantObj = plantsData.find(plant => plant.plant_name === selectedPlant);
+
+        if (!selectedAreaObj || !selectedPlantObj) {
+          throw new Error("Selected area or plant is invalid.");
+        }
+
+        const response = await fetch(`http://127.0.0.1:8000/tickets/`, {
+          method: 'POST',
+          headers: {
+            'accept': 'application/json',
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            payment_status: false,
+            selected_area: selectedAreaObj.id,
+            selected_plants: selectedPlantObj.id,
+            no_of_plants: numberOfPlants
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          console.error('Error submitting ticket:', errorData);
+          throw new Error(errorData.detail || 'Unknown error');
+        }
+
+        router.push('/payment');
+      } catch (error) {
+        console.error('Error submitting ticket:', error.message);
+        alert(`Error: ${error.message}`);
+      }
     }
   };
 
   const handlePayment = () => {
-    // const alertMessage = `Preview Data:\n${previewData}\n\nProceeding to payment...`;
-    // alert(alertMessage);
     router.push('/payment');
   };
 
   return (
-    <div className="p-4  h-full ">
+    <div className="p-4 h-full">
       <h2 className="text-2xl font-semibold mb-4">Select Options</h2>
       <div className="mb-4">
         <label htmlFor="area" className="block text-gray-700 font-bold mb-2">
           Select Area:
         </label>
-        <select
-          id="area"
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none"
-          value={selectedArea}
-          onChange={handleAreaChange} // Use handleAreaChange to update selectedArea
-        >
-          <option value="">Select Area</option>
-          {areasData.map((area, index) => (
-            <option key={index} value={area.name}>
-              {area.name}
-            </option>
-          ))}
-        </select>
+        {loadingAreas ? (
+          <div>Loading...</div>
+        ) : (
+          <select
+            id="area"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none"
+            value={selectedArea}
+            onChange={handleAreaChange}
+          >
+            <option value="">Select Area</option>
+            {areasData.map((area) => (
+              <option key={area.id} value={area.area}>
+                {area.area}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <div className="mb-4">
         <label htmlFor="plant" className="block text-gray-700 font-bold mb-2">
           Select Variety of Plant:
         </label>
-        <select
-          id="plant"
-          className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none"
-          value={selectedPlant}
-          onChange={(e) => setSelectedPlant(e.target.value)}
-        >
-          <option value="">Select Plant</option>
-          {plantsData.map((plant, index) => (
-            <option key={index} value={plant}>
-              {plant}
-            </option>
-          ))}
-        </select>
+        {loadingPlants ? (
+          <div>Loading...</div>
+        ) : (
+          <select
+            id="plant"
+            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:border-green-500 focus:outline-none"
+            value={selectedPlant}
+            onChange={(e) => setSelectedPlant(e.target.value)}
+          >
+            <option value="">Select Plant</option>
+            {plantsData.map((plant) => (
+              <option key={plant.id} value={plant.plant_name}>
+                {plant.plant_name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <div className="mb-4">
         <label
